@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>Questions</h1>
+    <ul id="questions-list"></ul>
+
+    <p id="feedback-message"></p>
+
+    <form id="answer-form">
+        <label for="answer">Your Answer:</label>
+        <input type="text" id="answer" name="answer" required>
+        <button type="submit">Submit Answer</button>
+    </form>
+
+    <script>
+        const questions = <%= JSON.stringify(questions) %>; // Pass questions array from server
+        const questionsList = document.getElementById("questions-list");
+        const answerForm = document.getElementById("answer-form");
+        const feedbackMessage = document.getElementById("feedback-message");
+
+        questions.forEach((question, index) => {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `
+                <strong>${question.Title}</strong>: ${question.Description}
+            `;
+            questionsList.appendChild(listItem);
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.name = `answer_${index}`;
+            input.placeholder = "Your answer";
+            answerForm.insertBefore(input, answerForm.lastChild);
+        });
+
+        answerForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            // Randomly choose whether the answer is correct or incorrect
+            const isCorrect = Math.random() < 0.5;
+
+            feedbackMessage.textContent = isCorrect
+                ? "Solution correct"
+                : "Incorrect solution";
+        });
+    </script>
+</body>
+
+</html>

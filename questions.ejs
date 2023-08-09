@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Questions</h1>
+    <ul id="questions-list">
+        <% questions.forEach((question, index) => { %>
+            <li>
+                <strong> Title :<%= question.Title %></strong>
+                <li> Description:<%= question.Description %></li>
+                <ul>
+                    <% question.Testcases.forEach((testcase) => { %>
+                        <li>
+                            Input: <%= testcase.Input %> </li>
+                            <li>
+                            Output: <%= testcase.Output %>
+                        </li>
+                    <% }); %>
+                </ul>
+            </li>
+        <% }); %>
+    </ul>
+
+    <p id="feedback-message"></p>
+
+    <form id="answer-form">
+        <label for="answer">Your Answer:</label>
+        <input type="text" id="answer" name="answer" required>
+        <button type="submit">Submit Answer</button>
+    </form>
+
+    <script src="/questions.js"></script>
+</body>
+</html>
